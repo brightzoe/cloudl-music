@@ -4,7 +4,7 @@ import Home from "../application/Home";
 import Recommend from "../application/Recommend";
 import Singers from "../application/Singers";
 import Rank from "../application/Rank";
-
+//eslint-disable-next-line
 export default [
 	{
 		path: "/",

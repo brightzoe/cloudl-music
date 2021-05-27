@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseUrl = "http://brightzoe.vaiwan.com";
+export const baseUrl = "http://192.168.1.140:7788";
 //创建axios实例，设置拦截器
 const axiosInstance = axios.create({
 	baseURL: baseUrl,
