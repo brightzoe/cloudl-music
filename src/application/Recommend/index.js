@@ -12,8 +12,12 @@ function Recommend(props) {
 	const { bannerList, recommendList, enterLoading } = props;
 	const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 	useEffect(() => {
-		getBannerDataDispatch();
-		getRecommendListDataDispatch();
+		if (!bannerList.size) {
+			getBannerDataDispatch();
+		}
+		if (!recommendList.size) {
+			getRecommendListDataDispatch();
+		}
 		//eslint-disable-next-line
 	}, []);
 	const bannerListJS = bannerList ? bannerList.toJS() : [];
@@ -26,7 +30,7 @@ function Recommend(props) {
 					<RecommendList recommendList={recommendListJS}></RecommendList>
 				</div>
 			</Scroll>
-			{enterLoading?<Loading></Loading>:null}
+			{enterLoading ? <Loading></Loading> : null}
 		</Content>
 	);
 }
@@ -35,7 +39,7 @@ function Recommend(props) {
 const mapStateToProps = (state) => ({
 	bannerList: state.getIn(["recommend", "bannerList"]),
 	recommendList: state.getIn(["recommend", "recommendList"]),
-	enterLoading:state.getIn(['recommend','enterLoading'])
+	enterLoading: state.getIn(["recommend", "enterLoading"]),
 });
 
 //映射dispatch到props
