@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseUrl = "https://brightzoe-cloud-music.vercel.app";
+export const baseUrl = "https://brightzoe-cloud-music-api.vercel.app";
 //创建axios实例，设置拦截器
 const axiosInstance = axios.create({
 	baseURL: baseUrl,
