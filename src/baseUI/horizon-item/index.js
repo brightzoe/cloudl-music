@@ -10,7 +10,7 @@ const List = styled.div`
 	height: 30px;
 	overflow: hidden;
 	> span:first-of-type {
-		display: block;
+		/* display: inline-block; */
 		flex: 0 0 auto;
 		padding: 5px 0;
 		margin-right: 5px;
@@ -34,9 +34,19 @@ const ListItem = styled.span`
 function Horizon(props) {
 	const { list, oldVal, title } = props;
 	const { handleClick } = props;
+	const Category = useRef(null);
+
+	useEffect(() => {
+		let categoryDOM = Category.current;
+		let tagElems = categoryDOM.querySelectorAll("span");
+		let totalWidth = 0;
+		Array.from(tagElems).forEach((i) => (totalWidth += i.offsetWidth));
+		categoryDOM.style.width = `${totalWidth}px`;
+	}, []);
+
 	return (
 		<Scroll direction="horizontal">
-			<div>
+			<div ref={Category}>
 				<List>
 					<span>{title}</span>
 					{list.map((item) => {
@@ -52,11 +62,6 @@ function Horizon(props) {
 	);
 }
 
-// 首先考虑接受的参数
-//list 为接受的列表数据
-//oldVal 为当前的 item 值
-//title 为列表左边的标题
-//handleClick 为点击不同的 item 执行的方法
 Horizon.defaultProps = {
 	list: [],
 	oldVal: "",
@@ -65,9 +70,9 @@ Horizon.defaultProps = {
 };
 
 Horizon.propTypes = {
-	list: PropTypes.array,
-	oldVal: PropTypes.string,
-	title: PropTypes.string,
-	handleClick: PropTypes.func,
+	list: PropTypes.array, //接受的列表数据
+	oldVal: PropTypes.string, //当前的 item 值
+	title: PropTypes.string, //列表左边的标题
+	handleClick: PropTypes.func, //点击不同的 item 执行的方法
 };
 export default memo(Horizon);
