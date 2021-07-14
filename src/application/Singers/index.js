@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Horizon from "../../baseUI/horizon-item";
-import { categoryTypes, alphaTypes } from "../../api/config";
+import Horizon from "@/baseUI/horizon-item";
+import { categoryTypes, alphaTypes } from "@/api/config";
 import { NavContainer, ListContainer, List, ListItem } from "./style";
-import Scroll from "../../components/scroll";
+import Scroll from "@/components/scroll";
 
 const singerList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => {
 	return {
