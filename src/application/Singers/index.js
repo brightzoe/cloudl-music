@@ -3,6 +3,7 @@ import Horizon from "@/baseUI/horizon-item";
 import { typeTypes, alphaTypes } from "@/api/config";
 import { NavContainer, ListContainer, List, ListItem } from "./style";
 import Scroll from "@/components/scroll";
+import Loading from "@/baseUI/loading";
 import {
 	getSingerList,
 	getHotSingerList,
@@ -14,11 +15,10 @@ import {
 	refreshMoreHotSingerList,
 } from "./store/actionCreators";
 import { connect } from "react-redux";
-import  LazyLoad, {forceCheck} from 'react-lazyload';
-
+import LazyLoad, { forceCheck } from "react-lazyload";
 
 function Singers(props) {
-	const [type, setType] = useState([-1,-1]);
+	const [type, setType] = useState([-1, -1]);
 	const [alpha, setAlpha] = useState("");
 
 	const { singerList, enterLoading, pullUpLoading, pullDownLoading, pageCount } = props;
@@ -30,42 +30,22 @@ function Singers(props) {
 
 	const handleUpdateType = (val) => {
 		setType(val);
-		updateDispatch(val,alpha)
+		updateDispatch(val, alpha);
 	};
 	const handleUpdateAlpha = (val) => {
 		setAlpha(val);
-		updateDispatch(type,val)
+		updateDispatch(type, val);
 	};
 
 	const handlePullUp = () => {
-    pullUpRefreshDispatch(type, alpha, type === '', pageCount);
-  };
+		pullUpRefreshDispatch(type, alpha, type === "", pageCount);
+	};
 
-  const handlePullDown = () => {
-    pullDownRefreshDispatch(type, alpha);
-  };
-	const renderSingerList = () => {
-    const list = singerList ? singerList.toJS(): [];
-    console.log(props)
-    return (
-      <List>
-        {
-          list.map((item, index) => {
-            return (
-              <ListItem key={item.accountId+""+index}>
-                <div className="img_wrapper">
-                  <LazyLoad placeholder={<img width="100%" height="100%" src={require('./singer.png')} alt="music"/>}>
-                    <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
-                  </LazyLoad>
-                </div>
-                <span className="name">{item.name}</span>
-              </ListItem>
-            )
-          })
-        }
-      </List>
-    )
-  };
+	const handlePullDown = () => {
+		pullDownRefreshDispatch(type, alpha);
+	};
+
+	const list = singerList ? singerList.toJS() : [];
 	return (
 		<>
 			<NavContainer>
@@ -73,14 +53,29 @@ function Singers(props) {
 				<Horizon list={alphaTypes} title={"首字母:"} handleClick={handleUpdateAlpha} oldVal={alpha}></Horizon>
 			</NavContainer>
 			<ListContainer>
-				{" "}
 				<Scroll
-				 pullUp={ handlePullUp }
-				 pullDown = { handlePullDown }
-				 pullUpLoading = { pullUpLoading }
-				 pullDownLoading = { pullDownLoading }
-				 onScroll={forceCheck}
-				>{renderSingerList()}</Scroll>
+					pullUp={handlePullUp}
+					pullDown={handlePullDown}
+					pullUpLoading={pullUpLoading}
+					pullDownLoading={pullDownLoading}
+					onScroll={forceCheck}
+				>
+					<List>
+						{list.map((item, index) => {
+							return (
+								<ListItem key={item.accountId + "" + index}>
+									<div className="img_wrapper">
+										<LazyLoad placeholder={<img width="100%" height="100%" src={require("./singer.png")} alt="music" />}>
+											<img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
+										</LazyLoad>
+									</div>
+									<span className="name">{item.name}</span>
+								</ListItem>
+							);
+						})}
+					</List>
+				</Scroll>
+				{enterLoading ? <Loading></Loading> : null}
 			</ListContainer>
 		</>
 	);

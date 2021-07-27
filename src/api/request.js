@@ -17,7 +17,6 @@ export const getHotSingerListRequest = (count) => {
 
 //歌手页数据
 export const getSingerListRequest = (type, alpha = "", count) => {
-	console.log(type,alpha);
 	return axiosInstance.get(
 		`/artist/list?type=${type[0] || "-1"}&area=${type[1] || "-1"}&initial=${alpha.toLowerCase()}&offset=${count}`
 	);

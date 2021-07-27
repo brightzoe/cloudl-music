@@ -91,7 +91,7 @@ export const getSingerList = (type, alpha) => {
 				dispatch(changePullDownLoading(false));
 			})
 			.catch(() => {
-				"歌手数据获取失败";
+				console.log("歌手数据获取失败");
 			});
 	};
 };

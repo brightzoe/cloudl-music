@@ -3,8 +3,12 @@ export const baseUrl = "https://brightzoe-cloud-music-api.vercel.app";
 //创建axios实例，设置拦截器
 const axiosInstance = axios.create({
 	baseURL: baseUrl,
+  timeout: 10000, // 设置统一的超时时长
 });
-
+axiosInstance.interceptors.request.use((config) => {
+	config.withCredentials = true;
+	return config;
+});
 axiosInstance.interceptors.response.use(
 	(res) => res.data,
 	(err) => {
@@ -33,59 +37,59 @@ export const typeTypes = [
 	},
 	{
 		name: "华语女",
-		key: [2,7],
+		key: [2, 7],
 	},
 	{
 		name: "华语组合",
-		key: [3,7],
+		key: [3, 7],
 	},
 	{
 		name: "欧美男",
-		key: [1,96],
+		key: [1, 96],
 	},
 	{
 		name: "欧美女",
-		key: [2,96],
+		key: [2, 96],
 	},
 	{
 		name: "欧美组合",
-		key: [3,96],
+		key: [3, 96],
 	},
 	{
 		name: "日本男",
-		key: [1,8],
+		key: [1, 8],
 	},
 	{
 		name: "日本女",
-		key: [2,8],
+		key: [2, 8],
 	},
 	{
 		name: "日本组合",
-		key: [3,8],
+		key: [3, 8],
 	},
 	{
 		name: "韩国男",
-		key: [1,16],
+		key: [1, 16],
 	},
 	{
 		name: "韩国女",
-		key: [2,16],
+		key: [2, 16],
 	},
 	{
 		name: "韩国组合",
-		key: [3,16],
+		key: [3, 16],
 	},
 	{
 		name: "其他男歌手",
-		key:[1,0],
+		key: [1, 0],
 	},
 	{
 		name: "其他女歌手",
-		key: [2,0],
+		key: [2, 0],
 	},
 	{
 		name: "其他组合",
-		key: [3,0],
+		key: [3, 0],
 	},
 ];
 
