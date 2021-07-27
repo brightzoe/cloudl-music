@@ -62,7 +62,7 @@ export const getHotSingerList = () => {
 export const refreshMoreHotSingerList = () => {
 	return (dispatch, getState) => {
 		const pageCount = getState().getIn(["singers", "pageCount"]);
-		const singerList = getState().getIn(["singer", "singerList"]);
+		const singerList = getState().getIn(["singers", "singerList"]);
 		getHotSingerListRequest(pageCount)
 			.then((res) => {
 				const data = [...singerList, ...res.artists];
@@ -77,13 +77,13 @@ export const refreshMoreHotSingerList = () => {
 
 /**
  * 第一次加载对应类别歌手
- * @param {*} category
+ * @param {*} type
  * @param {*} alpha
  * @returns
  */
-export const getSingerList = (category, alpha) => {
+export const getSingerList = (type, alpha) => {
 	return (dispatch, getState) => {
-		getSingerListRequest(category, alpha, 0)
+		getSingerListRequest(type, alpha, 0)
 			.then((res) => {
 				const data = res.artists;
 				dispatch(changeSingerList(data));
@@ -98,15 +98,15 @@ export const getSingerList = (category, alpha) => {
 
 /**
  * 加载更多对应类别的歌手
- * @param {*} category
+ * @param {*} type
  * @param {*} alpha
  * @returns
  */
-export const refreshMoreSingerList = (category, alpha) => {
+export const refreshMoreSingerList = (type, alpha) => {
 	return (dispatch, getState) => {
 		const pageCount = getState().getIn(["singers", "pageCount"]);
 		const singerList = getState().getIn(["singers", "singerList"]).toJS();
-		getSingerListRequest(category, alpha, pageCount)
+		getSingerListRequest(type, alpha, pageCount)
 			.then((res) => {
 				const data = [...singerList, ...res.artists];
 				dispatch(changeSingerList(data));
