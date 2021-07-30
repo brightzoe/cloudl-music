@@ -3,10 +3,13 @@ export const baseUrl = "https://brightzoe-cloud-music-api.vercel.app";
 //创建axios实例，设置拦截器
 const axiosInstance = axios.create({
 	baseURL: baseUrl,
-  timeout: 10000, // 设置统一的超时时长
+	timeout: 10000, // 设置统一的超时时长
 });
 axiosInstance.interceptors.request.use((config) => {
-	config.withCredentials = true;
+	config.withCredentials = true; //跨域处理
+	config.validateStatus = function (status) {
+		return status >= 200 && status < 300; // default
+	};
 	return config;
 });
 axiosInstance.interceptors.response.use(
